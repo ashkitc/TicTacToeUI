@@ -96,26 +96,6 @@ PlayBoardCell& PlayBoard::cellWithCoordinates(int row, int column)
 	return *chosen;
 }
 
-void PlayBoard::displayToConsole()
-{
-	for (int row = 0; row < 3; ++row)
-	{
-		for (int column = 0; column < 3; ++column)
-		{
-			std::cout << cellWithCoordinates(row,column).getValue();
-			if(column < 2)
-			{
-				std::cout<< '|'; 
-			}
-		}
-		std::cout << std::endl;
-		if(row < 2)
-		{
-			std::cout <<"------";
-			std::cout << std::endl;
-		}
-	}
-}
 
 bool PlayBoard::isEmpty()
 {
@@ -192,7 +172,7 @@ void PlayBoard::checkWinner()
 		}
 	}
 
-
+	//Checking diagonals
 	PlayBoardLine leftDiagonal;
 	PlayBoardLine rightDiagonal;
 	for(int i = 0; i < 3; ++i)
@@ -306,6 +286,10 @@ void PlayBoard::resetRatingOnColumns(char sign)
 
 void PlayBoard::resetRaitingOnDiagonals(char sign)
 {
+	/*
+	Looking for diagonal where sign can win or lose and set priority 
+			of this diagonal's empty cells 
+	*/
 	PlayBoardLine leftDiagonal;
 	PlayBoardLine rightDiagonal;
 	for(int i = 0; i < 3; ++i)
@@ -349,16 +333,19 @@ PlayBoardCell& PlayBoard::maxRaitedCell(char sign)
 
 void PlayBoard::paint(HDC hdc)
 {
+	//Paint the gamefield
 	RECT r; 
 	r.left=topLeftPoint.x; 
 	r.top=topLeftPoint.y; 
 	r.right=topLeftPoint.x+width; 
 	r.bottom=topLeftPoint.y+height;
-    FillRect(hdc, &r, (HBRUSH)CreateSolidBrush(RGB(255,239,219)));
+    FillRect(hdc, &r, (HBRUSH)CreateSolidBrush(RGB(255,239,219))); //fill gamefield with color
 
-	 HPEN hPen = CreatePen(PS_SOLID, 1, RGB(126,192,238)); //Создаётся объект
-    SelectObject(hdc, hPen); //Объект делается текущим
-	for (int i = topLeftPoint.x; i < topLeftPoint.x + width; i += 20)
+	 HPEN hPen = CreatePen(PS_SOLID, 1, RGB(126,192,238)); 
+    SelectObject(hdc, hPen); 
+
+	//paint background
+	for (int i = topLeftPoint.x; i < topLeftPoint.x + width; i += 20) 
 	{
 		MoveToEx(hdc,i,0,NULL);
 		LineTo(hdc,i,height);
@@ -370,8 +357,10 @@ void PlayBoard::paint(HDC hdc)
 		LineTo(hdc,width,i);
 	}
 
-	 hPen = CreatePen(PS_SOLID, 2, RGB(0,0,0)); //Создаётся объект
-    SelectObject(hdc, hPen); //Объект делается текущим
+
+    hPen = CreatePen(PS_SOLID, 2, RGB(0,0,0)); 
+    SelectObject(hdc, hPen); 
+	//paint borders of every cell
 	for(int i = topLeftPoint.x + width / 3; i <  topLeftPoint.x + width; i +=width / 3)
 	{
 		MoveToEx(hdc,i,0,NULL);
@@ -384,6 +373,7 @@ void PlayBoard::paint(HDC hdc)
 		LineTo(hdc,width,i);
 	}
 
+	//Paint all cells
 	for( int i = 0; i < 9; ++i)
 	{
 		gamefield[i].paint(hdc);
@@ -391,7 +381,7 @@ void PlayBoard::paint(HDC hdc)
 	
 }
 
-bool PlayBoard::handlePress(int x, int y)
+bool PlayBoard::handlePress(int x, int y) //call this method for set value of selected cell
 {
 	for(int i = 0; i < 9; ++i)
 	{
@@ -407,25 +397,25 @@ bool PlayBoard::handlePress(int x, int y)
 }
 
 
-PlayBoardCell& PlayBoard::oppositeCorner(PlayBoardCell& cell)
+PlayBoardCell& PlayBoard::oppositeCorner(PlayBoardCell& cell) //Search the opposite corner
 {
 
-	if(cell.isCorner())
+	if(cell.isCorner()) //check if cell is corner
 	{
 		if(cell.row() == cell.column())
 		{
 			if(cell.row() == 2)
 			{
-				return cellWithCoordinates(cell.row() - 2, cell.column() - 2);
+				return cellWithCoordinates(cell.row() - 2, cell.column() - 2); //return opposite corner
 			}
 			else 
 			{
-				return cellWithCoordinates(cell.row() + 2, cell.column() + 2);
+				return cellWithCoordinates(cell.row() + 2, cell.column() + 2); //return opposite corner
 			}
 		}
 		else 
 		{
-			return cellWithCoordinates(cell.column(),cell.row());
+			return cellWithCoordinates(cell.column(),cell.row());  //return opposite corner
 		}
 	}
 	

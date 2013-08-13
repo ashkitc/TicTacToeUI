@@ -6,7 +6,6 @@ class PlayBoard
 public:
 	PlayBoard(void);
     PlayBoard(int boardWidth, int boardHeight,POINT topLeft);
-	void displayToConsole(); 
 	bool isEndOfGame(); //Check if somebody wins or if all cells are occupied
 	bool setValueOfCellWithCoordinates(char newValue, int row, int column); 
 	PlayBoardCell& maxRaitedCell(char sign); //Search the best cell for next cpu step

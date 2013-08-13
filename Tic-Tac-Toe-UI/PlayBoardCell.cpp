@@ -61,9 +61,11 @@ void PlayBoardCell::reset()
 			 sign->paint(hdc);
 		 }
 	 }
-	HPEN hPen = CreatePen(PS_SOLID, 10, RGB(0,0,0)); //Создаётся объект
-    SelectObject(hdc, hPen); //Объект делается текущим
-	 switch(cellStatus)
+
+	 //Select a brush
+	HPEN hPen = CreatePen(PS_SOLID, 10, RGB(0,0,0)); 
+    SelectObject(hdc, hPen);
+	 switch(cellStatus) //Draw line according to game result
 	 {
 	 case winType::HORIZONTAL:
 		 MoveToEx(hdc,center.x - width / 2, center.y,NULL);

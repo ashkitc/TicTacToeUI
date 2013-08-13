@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cross.h" />
-    <ClInclude Include="GameBrain.h" />
     <ClInclude Include="PlayBoard.h" />
     <ClInclude Include="PlayBoardCell.h" />
     <ClInclude Include="PlayBoardLine.h" />
@@ -93,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cross.cpp" />
-    <ClCompile Include="GameBrain.cpp" />
     <ClCompile Include="PlayBoard.cpp" />
     <ClCompile Include="PlayBoardCell.cpp" />
     <ClCompile Include="PlayBoardLine.cpp" />

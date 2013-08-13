@@ -1,5 +1,5 @@
 #pragma once
-#include "Sign.h"
+#include "Sign.h" //Class of cross sign
 class Cross :
 	public Sign
 {

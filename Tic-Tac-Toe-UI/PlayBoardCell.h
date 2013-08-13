@@ -28,20 +28,21 @@ public:
 	void setHeight( int newHeight ) { height = newHeight; }
 	void setWidth ( int newWidth ) { width = newWidth; }
 	void setCenter(POINT newCenter){ center.x = newCenter.x; center.y = newCenter.y; }
-	void paint(HDC hdc);
-	bool hasPoint(POINT point);
 	winType getStatus() { return cellStatus; }
 	void setStatus(winType newStatus) { cellStatus = newStatus; }
-	void reset();
+
+	void paint(HDC hdc); //Method for paint (paints sign according to cells value)
+	bool hasPoint(POINT point); //Check if point passed as argument allocates inside the cell
+	void reset(); //Resets cells value and raiting
 private:
-	Sign *sign;
-	char value; //Can be x or o
-	int rating; 
+	Sign *sign;  //every cell has sign (cross or zero)
+	char value;  //Can be x or 0
+	int rating;  // cells raiting (determines if cell is critical)
 	int rowNumber;
 	int columnNumber;
 	int height;
 	int width;
-	winType cellStatus;
+	winType cellStatus; //win status (sets when cell belongs to line where somebody wins)
 	POINT center;
 };
 
